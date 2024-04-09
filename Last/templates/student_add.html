@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/css/layui.css">
+</head>
+<body>
+
+
+<form class="layui-form" action="" lay-filter="form_add" style="margin-top: 20px">
+    <div class="layui-form-item">
+        <label class="layui-form-label">姓名</label>
+        <div class="layui-input-block">
+            <input type="text" name="name" lay-verify="required" autocomplete="off" placeholder="请输入"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">性别</label>
+        <div class="layui-input-block">
+            <select name="gender" lay-verify="required">
+                <option value=""></option>
+                <option value="M">男</option>
+                <option value="F">女</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">班级</label>
+        <div class="layui-input-block">
+            <select name="class_name" lay-verify="required">
+                <option value=""></option>
+                <option value="一班">一班</option>
+                <option value="二班">二班</option>
+                <option value="三班">三班</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">手机号</label>
+        <div class="layui-input-block">
+            <input type="text" name="mobile" lay-verify="required|phone" autocomplete="off" placeholder="请输入"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">地址</label>
+        <div class="layui-input-block">
+            <textarea name="address" class="layui-textarea" placeholder="请输入地址"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">创建时间</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="create_at" id="create-at"
+                       placeholder="" autocomplete="off" lay-verify="required">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item" pane>
+        <label class="layui-form-label">禁用</label>
+        <div class="layui-input-block">
+            <input type="checkbox" name="disable" lay-skin="switch" lay-filter="switchTest" title="是|否">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="submit" class="layui-btn" lay-submit lay-filter="add-commit">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+
+<script src="/static/layui.js"></script>
+
+<script>
+    layui.use(function () {
+        var $ = layui.$;
+        var form = layui.form;
+        var laydate = layui.laydate;
+
+    // 新增提交的方法
+    const add_student = async (data) => {
+        const options = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        }
+        const response = await fetch('/api/student', options)
+        return await response.json()
+    }
+
+    // 提交事件
+    form.on('submit(add-commit)', function (data) {
+        var field = data.field; // 获取表单字段值
+        console.log(field)
+        // 此处可执行 Ajax 等操作
+        field.disable = field?.disable ? true : false
+
+        add_student(field).then(function (ret) {
+
+            // 提交成功之后的回调
+            if (!ret.code) {
+                layer.msg(ret.msg, {
+                    icon: 1,
+                    time: 1000,
+                }, function () {
+                    parent.layer.close(parent.layer.getFrameIndex(window.name)); //关闭当前页
+                    parent.layui.table.reload('student');
+                });
+            } else {
+                layer.msg(ret.msg, {
+                    icon: 2,
+                    time: 1000,
+                });
+            }
+        })
+
+        // …
+        return false; // 阻止默认 form 跳转
+    });
+
+        // 日期时间选择器
+        laydate.render({
+            elem: '#create-at',
+            type: 'datetime'
+        });
+    })
+</script>
+</body>
+</html>
