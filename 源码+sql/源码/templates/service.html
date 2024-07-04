@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>智能问答</title>
+    <style>
+        .zd {
+            width: 1510px;
+            height: 708px;
+            background-image: url(/static/img/9.png);
+            background-size: 100% 700px;
+        }
+        .tw {
+            text-align: center;
+            position: relative;
+            top: 10px;
+            border: 1px solid #ccc;
+        }
+        .hd {
+            width: 1200px;
+            height: 500px;
+            position: relative;
+            top: 50px;
+            left: 170px;
+            border: 1px solid gray;
+            border-radius: 16px;
+        }
+        .hz {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="zd">
+        <div class="hz">
+            <h1>智能问答</h1>
+        </div>
+        <div class="tw">
+            <form method="post" action="/service">
+                <input type="text" id="phone-number" name="question" placeholder="请输入想要询问的内容" style="width: 400px;height:30px;border-radius: 8px;">
+                <button class="login-button" type="submit" name="login-button" style="width: 80px;height:34px;background:#198CCF;color:white;border-radius: 8px;">查询</button>
+            </form>
+        </div>
+        <div class="hd">
+            <p>{{ token }}</p>
+        </div>
+    </div>
+</body>
+</html>

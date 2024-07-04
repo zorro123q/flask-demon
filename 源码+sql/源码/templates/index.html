@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+     <title>学生信息管理系统</title>
+    <link rel="stylesheet" href="/static/css/layui.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .fullscreen-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        .centered-text {
+            position: relative;
+            color: black; /* 根据背景图片的颜色调整文本颜色以保证可读性 */
+            font-size: 48px; /* 或根据需要调整字体大小 */
+            z-index: 1; /* 确保文本显示在图片上方 */
+        }
+    </style>
+</head>
+<body>
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo layui-hide-xs layui-bg-black">学生信息管理系统</div>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item layui-hide layui-show-sm-inline-block">
+                {% if not is_login %}
+                <a href="/login">
+                    登录
+                </a>
+                {% else %}
+                <a href="javascript:;">
+                    <img src="//unpkg.com/outeres@0.0.10/img/layui/icon-v2.png" class="layui-nav-img">
+                    欢迎！
+                </a>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+</div>
+<script src="/static/layui.js"></script>
+<div style="margin-top: 80px;">
+    <img src="/static/img/preview.jpg" class="fullscreen-image">
+    <h1 class="centered-text">学生信息管理系统</h1>
+</div>
+
+</body>
+</html>
